@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<title>Hls.js demo - basic usage</title>
+</head>
+
+<body>
+<script src="https://hls-js.netlify.app/dist/hls.js"></script>
+
+<center>
+    <h1>Hls.js demo - basic usage</h1>
+    <video height="720" id="video" controls></video>
+</center>
+
+<script>
+    function get_query_parameter(target) {
+        if (location.search)
+            for (query of location.search.slice(1).split('&'))
+            {
+                aquery = query.split('=');
+                if (aquery[0] == target)
+                    return aquery[1];
+            }
+        return null;
+    }
+
+    if(Hls.isSupported()) {
+        var video = document.getElementById('video');
+        var hls = new Hls({
+            debug: true
+        });
+        hls.loadSource(get_query_parameter('manifest'));
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+          video.muted = true;
+          video.play();
+    });
+    }
+</script>
+<div>
+Credits: https://github.com/video-dev/hls.js/
+</div>
+</body>
+</html>
