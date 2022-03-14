@@ -37,7 +37,7 @@ Credits: https://github.com/video-dev/hls.js/
             "capLevelOnFPSDrop": false,
             "capLevelToPlayerSize": true, // false
             "initialLiveManifestSize": 1,
-            "maxBufferLength": 10, // 30
+            "maxBufferLength": 10, // 30 // minimum buffer to fetch
             "backBufferLength": null,
             "maxBufferSize": 60000000,
             "maxBufferHole": 0.1,
@@ -51,7 +51,7 @@ Credits: https://github.com/video-dev/hls.js/
             "liveDurationInfinity": false,
             "liveBackBufferLength": null,
             "maxMaxBufferLength": 20, // 600
-            "enableWorker": true,
+            "enableWorker": false, // true
             "enableSoftwareAES": false, // true
             "manifestLoadingTimeOut": 10000,
             "manifestLoadingMaxRetry": 1,
