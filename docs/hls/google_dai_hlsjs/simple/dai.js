@@ -1,15 +1,16 @@
 // This stream will be played if ad-enabled playback fails.
 
-var BACKUP_STREAM =
-    'http://storage.googleapis.com/testtopbox-public/video_content/bbb/' +
-    'master.m3u8';
+// var BACKUP_STREAM = 'http://storage.googleapis.com/testtopbox-public/video_content/bbb/' + 'master.m3u8';
 
 // Live stream asset key.
-var TEST_ASSET_KEY = 'sN_IYUG8STe1ZzhIIE_ksA';
+// var TEST_ASSET_KEY = 'sN_IYUG8STe1ZzhIIE_ksA';
+var TEST_ASSET_KEY = get_query_parameter('TEST_ASSET_KEY');
 
 // VOD content source and video IDs.
-var TEST_CONTENT_SOURCE_ID = '2528370';
-var TEST_VIDEO_ID = 'tears-of-steel';
+//var TEST_CONTENT_SOURCE_ID = '2528370';
+//var TEST_VIDEO_ID = 'tears-of-steel';
+var TEST_CONTENT_SOURCE_ID = get_query_parameter('TEST_CONTENT_SOURCE_ID');;
+var TEST_VIDEO_ID = get_query_parameter('TEST_VIDEO_ID');
 
 // StreamManager which will be used to request ad-enabled streams.
 var streamManager;
@@ -59,9 +60,11 @@ function initPlayer() {
     }
   });
 
-  requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null);
-  // Uncomment line below and comment one above to request a LIVE stream.
-  // requestLiveStream(TEST_ASSET_KEY, null);
+
+  if (get_query_parameter('isLive'))
+    requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null);
+  else
+    requestLiveStream(TEST_ASSET_KEY, null);
 }
 
 /**
@@ -102,7 +105,7 @@ function onStreamEvent(e) {
       break;
     case google.ima.dai.api.StreamEvent.Type.ERROR:
       console.log('Error loading stream, playing backup stream.' + e);
-      loadUrl(BACKUP_STREAM);
+      // loadUrl(BACKUP_STREAM);
       break;
     case google.ima.dai.api.StreamEvent.Type.AD_BREAK_STARTED:
       console.log('Ad Break Started');
