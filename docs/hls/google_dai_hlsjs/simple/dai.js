@@ -5,13 +5,13 @@
 
 // Live stream asset key.
 // var TEST_ASSET_KEY = 'sN_IYUG8STe1ZzhIIE_ksA';
-var TEST_ASSET_KEY = get_query_parameter('TEST_ASSET_KEY');
+var TEST_ASSET_KEY = getQueryParam('TEST_ASSET_KEY');
 
 // VOD content source and video IDs.
 //var TEST_CONTENT_SOURCE_ID = '2528370';
 //var TEST_VIDEO_ID = 'tears-of-steel';
-var TEST_CONTENT_SOURCE_ID = get_query_parameter('TEST_CONTENT_SOURCE_ID');;
-var TEST_VIDEO_ID = get_query_parameter('TEST_VIDEO_ID');
+var TEST_CONTENT_SOURCE_ID = getQueryParam('TEST_CONTENT_SOURCE_ID');;
+var TEST_VIDEO_ID = getQueryParam('TEST_VIDEO_ID');
 
 // StreamManager which will be used to request ad-enabled streams.
 var streamManager;
@@ -62,7 +62,7 @@ function initPlayer() {
   });
 
 
-  if (get_query_parameter('isVOD'))
+  if (getBooleanParam('isVOD'))
     requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null);
   else
     requestLiveStream(TEST_ASSET_KEY, null);
