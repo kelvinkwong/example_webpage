@@ -1,5 +1,6 @@
-// This stream will be played if ad-enabled playback fails.
+// https://github.com/googleads/googleads-ima-html5-dai
 
+// This stream will be played if ad-enabled playback fails.
 // var BACKUP_STREAM = 'http://storage.googleapis.com/testtopbox-public/video_content/bbb/' + 'master.m3u8';
 
 // Live stream asset key.
@@ -61,7 +62,7 @@ function initPlayer() {
   });
 
 
-  if (get_query_parameter('isLive'))
+  if (get_query_parameter('isVOD'))
     requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null);
   else
     requestLiveStream(TEST_ASSET_KEY, null);
