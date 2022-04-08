@@ -65,9 +65,9 @@ function initPlayer() {
 
 
   if (getBooleanParam('isVOD'))
-    requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null, TEST_AD_TAG);
+    requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null, {'cust_params': TEST_AD_TAG_CUST, 'iu': TEST_AD_TAG_IU});
   else
-    requestLiveStream(TEST_ASSET_KEY, null, {'cust_params': TEST_AD_TAG_CUST, 'iu': TEST_AD_TAG_IU});
+    requestLiveStream(TEST_ASSET_KEY, null);
 }
 
 /**
