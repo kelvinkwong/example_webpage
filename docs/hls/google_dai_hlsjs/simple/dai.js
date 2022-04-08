@@ -12,6 +12,8 @@ var TEST_ASSET_KEY = getQueryParam('TEST_ASSET_KEY');
 //var TEST_VIDEO_ID = 'tears-of-steel';
 var TEST_CONTENT_SOURCE_ID = getQueryParam('TEST_CONTENT_SOURCE_ID');;
 var TEST_VIDEO_ID = getQueryParam('TEST_VIDEO_ID');
+var TEST_AD_TAG_CUST = getQueryParam('TEST_AD_TAG_CUST');
+var TEST_AD_TAG_IU = getQueryParam('TEST_AD_TAG_IU');
 
 // StreamManager which will be used to request ad-enabled streams.
 var streamManager;
@@ -63,9 +65,9 @@ function initPlayer() {
 
 
   if (getBooleanParam('isVOD'))
-    requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null);
+    requestVODStream(TEST_CONTENT_SOURCE_ID, TEST_VIDEO_ID, null, TEST_AD_TAG);
   else
-    requestLiveStream(TEST_ASSET_KEY, null);
+    requestLiveStream(TEST_ASSET_KEY, null, {'cust_params': TEST_AD_TAG_CUST, 'iu': TEST_AD_TAG_IU});
 }
 
 /**
@@ -73,10 +75,12 @@ function initPlayer() {
  * @param  {string} assetKey
  * @param  {?string} apiKey
  */
-function requestLiveStream(assetKey, apiKey) {
+function requestLiveStream(assetKey, apiKey, adTagParam) {
   var streamRequest = new google.ima.dai.api.LiveStreamRequest();
   streamRequest.assetKey = assetKey;
   streamRequest.apiKey = apiKey || '';
+  if (videoItem.dai.adTagParameters)
+    streamRequest.adTagParameters = adTagParam;
   streamManager.requestStream(streamRequest);
 }
 
@@ -86,11 +90,14 @@ function requestLiveStream(assetKey, apiKey) {
  * @param  {string} videoId
  * @param  {?string} apiKey
  */
-function requestVODStream(cmsId, videoId, apiKey) {
+function requestVODStream(cmsId, videoId, apiKey, adTagParam) {
   var streamRequest = new google.ima.dai.api.VODStreamRequest();
   streamRequest.contentSourceId = cmsId;
   streamRequest.videoId = videoId;
   streamRequest.apiKey = apiKey;
+  if (videoItem.dai.adTagParameters)
+    streamRequest.adTagParameters = adTagParam;
+
   streamManager.requestStream(streamRequest);
 }
 
@@ -105,7 +112,7 @@ function onStreamEvent(e) {
       loadUrl(e.getStreamData().url);
       break;
     case google.ima.dai.api.StreamEvent.Type.ERROR:
-      console.log('Error loading stream, playing backup stream.' + e);
+      console.error('Error loading stream, playing backup stream.' + e);
       // loadUrl(BACKUP_STREAM);
       break;
     case google.ima.dai.api.StreamEvent.Type.AD_BREAK_STARTED:
