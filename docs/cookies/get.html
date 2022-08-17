@@ -3,14 +3,14 @@
     <link rel="stylesheet" href="../css/style.css" >
     <script type="text/javascript" src="../js/script.js"></script>
 </head>
-<script>
-    document.cookie.split(";").forEach(function(c) {
-        blob = document.createElement('p');
-        blob.innerHTML = c;
-        document.body.append(blob); 
-    });
-</script>
 <html>
 <body>
+    <script>
+        document.cookie.split(";").forEach(function(c) {
+            blob = document.createElement('p');
+            blob.innerHTML = c;
+            document.body.append(blob); 
+        });
+    </script>
 </body>
 </html>
