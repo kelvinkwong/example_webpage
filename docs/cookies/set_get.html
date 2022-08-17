@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="../css/style.css" >
+    <script type="text/javascript" src="../js/script.js"></script>
+</head>
+<html>
+<body>
+    <script>
+        document.cookie = new Date().getTime() + "=" + Math.random();
+        document.body.append("New Cookie: " + document.cookie.split(';').pop());
+
+        document.body.append(document.createElement('hr'));
+
+        document.body.append('All Cookies: ' + document.cookie.split(';').length);
+
+        document.cookie.split(";").forEach(function(c) {
+            blob = document.createElement('p');
+            blob.innerHTML = c;
+            document.body.append(blob); 
+        });
+    </script>
+</body>
+</html>
