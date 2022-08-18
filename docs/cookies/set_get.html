@@ -6,17 +6,29 @@
 <html>
 <body>
     <script>
-        document.cookie = new Date().getTime() + "=" + Math.random();
-        document.body.append("New Cookie: " + document.cookie.split(';').pop());
+        function documentWriteParagraph(text){
+            blob = document.createElement('p');
+            blob.innerHTML = text;
+            document.body.append(blob);
+        }
+
+        const ONE_YEAR = 365 *24*60*60*1000;
+        var expires = new Date();
+        expires.setTime(expires.getTime() + ONE_YEAR);
+        document.cookie = 'expires_' + new Date().getTime() + "=" + Math.random() +
+            ';expires=' + expires.toUTCString();
+        document.cookie = 'max-age_' + new Date().getTime() + "=" + Math.random() +
+            ';max-age=' + ONE_YEAR;
+        var cookies = document.cookie.split(';');
+        documentWriteParagraph("New Cookies:");
+        documentWriteParagraph(cookies.pop());
+        documentWriteParagraph(cookies.pop());
 
         document.body.append(document.createElement('hr'));
 
-        document.body.append('All Cookies: ' + document.cookie.split(';').length);
-
+        documentWriteParagraph('All Cookies: ' + document.cookie.split(';').length);
         document.cookie.split(";").forEach(function(c) {
-            blob = document.createElement('p');
-            blob.innerHTML = c;
-            document.body.append(blob); 
+            documentWriteParagraph(c);
         });
     </script>
 </body>
