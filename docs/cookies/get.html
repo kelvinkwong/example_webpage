@@ -6,11 +6,16 @@
 <html>
 <body>
     <script>
+        documentWriteParagraph('All Cookies: ' + document.cookie.split(';').length);
         document.cookie.split(";").forEach(function(c) {
-            blob = document.createElement('p');
-            blob.innerHTML = c;
-            document.body.append(blob); 
+            documentWriteParagraph(c);
         });
+
+        function documentWriteParagraph(text){
+            blob = document.createElement('p');
+            blob.innerHTML = text;
+            document.body.append(blob);
+        }
     </script>
 </body>
 </html>
