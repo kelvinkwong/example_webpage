@@ -11,7 +11,7 @@
 <meta http-equiv="Expires" content="0" />
 </head>
 <body>
-<video height="720" id="video" controls></video>
+<video height="720" id="video" ></video>
 <div>
 Credits: https://github.com/video-dev/hls.js/
 </div>
@@ -96,12 +96,27 @@ Credits: https://github.com/video-dev/hls.js/
             "captionsTextTrack4LanguageCode": "",
             "renderTextTracksNatively": true
         });
+        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+            video.loop = true;
+            video.muted = true;
+            video.controls = true;
+            video.play();
+        });
+        hls.once(Hls.Events.BUFFER_APPENDED, function() {
+            video.muted = false;
+        });
+        
         hls.loadSource(get_query_parameter('manifest'));
         hls.attachMedia(video);
-        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
-          video.muted = true;
-          video.play();
-    });
+
+
+    //     hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+    //         video.muted = true;
+    //         video.play().then(
+    //             function (){
+    //                 video.muted = false;
+    //             });
+    // });
     }
 </script>
 </html>
