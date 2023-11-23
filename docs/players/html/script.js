@@ -55,7 +55,7 @@ function updatePlayerCurrentTime() {
         player_currentTime.innerHTML = secondsToHHMMSS(video.currentTime);
 
         let player_status = document.getElementById('player_status');
-        player_status.innerHTML = video.paused ? "pause" : "playing";
+        player_status.innerHTML = video.paused ? "pause" : `playing ${video.playbackRate}x`;
     }
 
     if (queryParams.get('saveCurrentTime') == 'false')
@@ -95,18 +95,14 @@ function videoSeek(time){
 }
 
 function handleVideoPlayEvent(keyCode){
-    player_status = document.getElementById('player_status');
-
     switch (keyCode){
         case KEY_PLAY:
             video.play();
-            if (player_status)
-                player_status.innerHTML = video.paused ? "pause" : "playing";
+            updatePlayerCurrentTime();
             break;
         case KEY_PAUSE:
             video.pause();
-            if (player_status)
-                player_status.innerHTML = video.paused ? "pause" : "playing";
+            updatePlayerCurrentTime();
             break;
         case KEY_P:
         case KEY_PLAY_PAUSE:
@@ -132,7 +128,7 @@ function invokeOSD(){
 
         inElement = document.createElement('div');
         inElement.id = 'player_status';
-        if (video) 
+        if (video)
             inElement.innerHTML = video.paused ? "pause" : "playing";
         osd.append(inElement);
 
@@ -180,8 +176,8 @@ function handleVideoSeekEvent(keyCode){
     }
 }
 
-function history_previous(event){
-    switch(event){
+function handleHistoryNavigation(keyCode){
+    switch(keyCode){
         case KEY_ESCAPE:
             window.history.back();
             break;
@@ -189,9 +185,22 @@ function history_previous(event){
         case KEY_B:
         case KEY_BACK:
             if (params.get('returnUrl'))
-                location.href = util.base64urlDecode(params.get('returnUrl'));
+                location.href = base64_decode(params.get('returnUrl'));
             else
                 window.history.back();
+            break;
+    }
+}
+
+function handleVideoPlaybackSpeed(keyCode){
+    switch (keyCode){
+        case KEY_1:
+            video.playbackRate = 1;
+            updatePlayerCurrentTime();
+            break;
+        case KEY_2:
+            video.playbackRate = 2;
+            updatePlayerCurrentTime();
             break;
     }
 }
@@ -205,6 +214,11 @@ function onKey(event) {
         case KEY_PLAY:
         case KEY_PAUSE:
             handleVideoPlayEvent(event.keyCode);
+            break;
+
+        case KEY_1:
+        case KEY_2:
+            handleVideoPlaybackSpeed(event.keyCode);
             break;
 
         case KEY_0:
@@ -227,7 +241,7 @@ function onKey(event) {
         case KEY_B:
         case KEY_BACK:
         case KEY_ESCAPE:
-            history_previous();
+            handleHistoryNavigation(event.keyCode);
             break;
 
         default:
