@@ -1,0 +1,21 @@
+video {
+    height: 100%;
+    z-index: 0;
+    object-fit: contain;
+}
+.player_osd {
+    position: absolute;
+    top: 25;
+    left: 50;
+    z-index: 1;
+    background-color: white;
+    font-size: 30px;
+    opacity: 0.7;
+}
+
+/* This is for WPE to hide the controls and prevent errors in logs */
+video::-webkit-media-controls-panel {
+    display: none !important;
+    opacity: 0 !important;
+    -webkit-appearance: none;
+}
