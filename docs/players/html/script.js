@@ -180,6 +180,22 @@ function handleVideoSeekEvent(keyCode){
     }
 }
 
+function history_previous(event){
+    switch(event){
+        case KEY_ESCAPE:
+            window.history.back();
+            break;
+
+        case KEY_B:
+        case KEY_BACK:
+            if (params.get('returnUrl'))
+                location.href = util.base64urlDecode(params.get('returnUrl'));
+            else
+                window.history.back();
+            break;
+    }
+}
+
 function onKey(event) {
     // if (get_query_parameter('keylogger'))
     console.log('Key Event: ', event);
@@ -211,7 +227,7 @@ function onKey(event) {
         case KEY_B:
         case KEY_BACK:
         case KEY_ESCAPE:
-            window.history.back();
+            history_previous();
             break;
 
         default:
