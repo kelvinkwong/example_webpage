@@ -178,12 +178,9 @@ function handleVideoSeekEvent(keyCode){
 
 function handleHistoryNavigation(keyCode){
     switch(keyCode){
-        case KEY_ESCAPE:
-            window.history.back();
-            break;
-
         case KEY_B:
         case KEY_BACK:
+        case KEY_ESCAPE:
             if (params.get('returnUrl'))
                 location.href = base64_decode(params.get('returnUrl'));
             else
@@ -193,16 +190,17 @@ function handleHistoryNavigation(keyCode){
 }
 
 function handleVideoPlaybackSpeed(keyCode){
+    const allowedPlaybackRates = [1, 1.05, 1.5, 2];
     switch (keyCode){
         case KEY_1:
             video.playbackRate = 1;
-            updatePlayerCurrentTime();
             break;
         case KEY_2:
-            video.playbackRate = 2;
-            updatePlayerCurrentTime();
+            currentRate = allowedPlaybackRates.findIndex((element) => element == video.playbackRate);
+            video.playbackRate = allowedPlaybackRates[currentRate + 1];
             break;
     }
+    updatePlayerCurrentTime();
 }
 
 function onKey(event) {
