@@ -196,8 +196,9 @@ function handleVideoPlaybackSpeed(keyCode){
             video.playbackRate = 1;
             break;
         case KEY_2:
-            currentRate = allowedPlaybackRates.findIndex((element) => element == video.playbackRate);
-            video.playbackRate = allowedPlaybackRates[currentRate + 1];
+            currentRateIndex = allowedPlaybackRates.findIndex((element) => element == video.playbackRate);
+            nextRateIndex = currentRateIndex+1 == allowedPlaybackRates.length ? 0 : currentRateIndex+1;
+            video.playbackRate = allowedPlaybackRates[nextRateIndex];
             break;
     }
     updatePlayerCurrentTime();
