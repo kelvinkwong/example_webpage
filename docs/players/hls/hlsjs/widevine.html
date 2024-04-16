@@ -24,13 +24,13 @@
       var video = document.getElementById('video');
       if (Hls.isSupported()) {
         var hls = new Hls({
-          "debug": true,
-          "enableworker": true,
-          "lowlatencymode": true,
-          "backbufferlength": 0,
-          "widevinelicenseurl": license,
-          "emeenabled": true
-        });
+  "debug": true,
+  "enableWorker": true,
+  "lowLatencyMode": true,
+  "backBufferLength": 0,
+  "widevineLicenseUrl": license,
+  "emeEnabled": true
+});
         hls.loadSource(manifest);
         hls.attachMedia(video);
         hls.on(Hls.Events.MEDIA_ATTACHED, function () {
@@ -39,7 +39,7 @@
         });
         hls.on(Hls.Events.INIT_PTS_FOUND, function () {
           video.muted = false;
-        });          
+        });
       }
     </script>
 </html>
