@@ -1,0 +1,46 @@
+
+<html>
+  <head>
+    <title>Hls.js demo - basic usage</title>
+<style>
+    body {
+        background: gray;
+    }
+</style>
+  </head>
+
+  <body>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.8/hls.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <center>
+      <h1>Hls.js demo - basic usage</h1>
+      <video height="600" id="video" controls></video>
+    </center>
+
+    <script>
+      const manifest = 'https://storage.googleapis.com/shaka-demo-assets/angel-one-widevine-hls/hls.m3u8';
+      const license = 'https://cwip-shaka-proxy.appspot.com/no_auth';
+
+      var video = document.getElementById('video');
+      if (Hls.isSupported()) {
+        var hls = new Hls({
+          "debug": true,
+          "enableworker": true,
+          "lowlatencymode": true,
+          "backbufferlength": 0,
+          "widevinelicenseurl": license,
+          "emeenabled": true
+        });
+        hls.loadSource(manifest);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+          video.muted = true;
+          video.play();
+        });
+        hls.on(Hls.Events.INIT_PTS_FOUND, function () {
+          video.muted = false;
+        });          
+      }
+    </script>
+</html>
+
