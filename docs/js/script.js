@@ -8,8 +8,13 @@ function display_this_url(){
     document.getElementById('parameters').innerHTML = window.location.search;
 }
 
+function display_keypress(event){
+    document.getElementById('keypressed').innerHTML = event.keyCode;
+}
+
 function bodyonload(){
     console.log("body loaded");
     display_useragent();
     display_this_url();
+    document.onkeydown = display_keypress;
 }
